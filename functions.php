@@ -47,6 +47,10 @@ if (!function_exists('readclub_setup')):
    */
   add_theme_support('post-thumbnails');
 
+  add_image_size( 'anons__img', 335, 216, true);
+
+
+
   // This theme uses wp_nav_menu() in one location.
   register_nav_menus(
    array(

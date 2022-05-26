@@ -40,7 +40,7 @@
 		<div class="row">
 			<?php $loop = get_field('loop');?>
 			<?php foreach ($loop as $loop) {?>
-				<?php $modal = $loop['modalnoe_okno']; ?>
+			<?php $modal = $loop['modalnoe_okno']; ?>
 
 			<a class="anons__item <?php if($modal){echo ' modal-open';}?>" href="<?php echo $loop['ssylka']; ?>"
 				style="background-color:<?php echo $loop['czvet_fona']; ?>">
@@ -50,9 +50,18 @@
 					<?php echo $loop['tekst_bejdzha']; ?></div>
 				<?php endif;?>
 
-				<?php if ($loop['izobrazhenie']): ?>
-				<div class="anons__img"><img src="<?php echo $loop['izobrazhenie']; ?>" alt=""></div>
-				<?php endif;?>
+
+
+
+
+				<?php 
+				$image = ($loop['izobrazhenie']);
+				$size = 'anons__img';
+				?>
+				<?php if( $image ) { ?>
+				<?php  echo wp_get_attachment_image( $image['ID'], $size ); ?>
+				<?php } ?>
+
 
 				<?php if ($loop['zagolovok']): ?>
 				<h2><?php echo $loop['zagolovok']; ?></h2>
@@ -209,7 +218,8 @@
 <section class="testblock">
 	<div class="container">
 		<div class="testblock__wr">
-			<div data-aos="fade-up" data-aos-offset="-800"><a class="btn" href="https://chitai.club/testiruem-s-uchitelem/">ТЕСТИРОВАНИЕ С УЧИТЕЛЕМ</a></div>
+			<div data-aos="fade-up" data-aos-offset="-800"><a class="btn"
+					href="https://chitai.club/testiruem-s-uchitelem/">ТЕСТИРОВАНИЕ С УЧИТЕЛЕМ</a></div>
 			<p data-aos="fade-up" data-aos-offset="-800">Если вы не уверены какой уровень подойдет вашему ребенку, вы можете
 				назначить бесплатный звонок-тест с учителем <a href="https://chitai.club/testiruem-s-uchitelem/">здесь</a></p>
 		</div>

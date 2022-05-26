@@ -40,20 +40,20 @@
 							<div class="price">
 								<?php if (get_field('czena_nedelya')): ?>
 								<ins>
-									$<?php echo get_field('czena_nedelya'); ?> / неделя
+									$<?php echo get_field('czena_nedelya'); ?> / <?php the_field('period_podpiski');?> 
 								</ins>
 								<?php endif;?>
 
 								<?php if (get_field('staraya_czena_nedelya')): ?>
 								<del>
-									$<?php echo get_field('staraya_czena_nedelya'); ?> / неделя
+									$<?php echo get_field('staraya_czena_nedelya'); ?> / <?php the_field('period_podpiski');?>
 								</del>
 								<?php endif;?>
 							</div>
 							<?php if (get_field('ekonomiya_nedelya')): ?>
 							<div class="lp-block6__ekonomy">
 								<span>Экономия</span>
-								$<?php echo get_field('ekonomiya_nedelya'); ?> / неделя
+								$<?php echo get_field('ekonomiya_nedelya'); ?> / <?php the_field('period_podpiski');?>
 							</div>
 							<?php endif;?>
 							<?php if (get_field('opisanie_oplaty')): ?>
