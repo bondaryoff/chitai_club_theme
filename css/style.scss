@@ -7204,21 +7204,83 @@ button.button {
   }
 }
 
-/*# sourceMappingURL=style.css.map */
-
-.libery__wrapp {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 15px;
-}
-
-.libery__img {
-  height: 400px;
-
-  img {
-    display: block;
-    margin: auto;
+.libery {
+  &__wrapp {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
   }
+
+  &__img {
+    height: 400px;
+
+    img {
+      display: block;
+      margin: auto;
+    }
+  }
+
+  &__row {}
+
+  &__box {
+    box-sizing: border-box;
+    display: flex;
+    padding-right: 40px;
+    border: 3px solid var(--orange);
+    border-radius: 30px;
+    box-sizing: border-box;
+    padding: 15px;
+    margin-bottom: 20px;
+
+    &__img {}
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &__text {
+      box-sizing: border-box;
+      padding-left: 20px;
+      p{
+        padding-bottom: 5px;
+        span{
+          padding-left: 10px;
+          display: inline-block;
+        }
+      }
+      b{
+        font-weight: bold;
+      }
+    }
+
+    &__btns {
+      display: flex;
+    }
+
+    h2 {
+      font-weight: bold;
+      font-size: 35px;
+    }
+
+
+  }
+
+  &__btn {
+    background: var(--orange);
+    height: 40px;
+    color: #fff !important;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-left: 15px;
+  }
+
 }
 
 
@@ -7233,14 +7295,14 @@ button.button {
   &__item {
     text-align: center;
 
-    h2{
+    h2 {
       font-weight: bold;
       font-size: 30px;
       padding: 20px 0;
     }
   }
 
-  &__img{
+  &__img {
     border: 3px solid #FEB326;
     border-radius: 30px;
     padding: 10px;
@@ -7250,7 +7312,8 @@ button.button {
     width: 100%;
     height: 300px;
     box-sizing: border-box;
-    img{
+
+    img {
       display: block;
       margin: auto;
       max-width: 100%;
@@ -7259,6 +7322,57 @@ button.button {
   }
 }
 
-.breadcrumbs{
+.breadcrumbs {
   padding: 10px 0;
+}
+
+
+.library__spoiler {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  color: #7F58AF;
+
+  &__title {
+    font-weight: bold;
+    font-size: 28px;
+    cursor: pointer;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid #7F58AF;
+    }
+  }
+
+  &__body {
+    display: none;
+    opacity: 0;
+
+    &.open {
+      animation: spoiler .3s ease forwards;
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes spoiler {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  25% {
+    display: block;
+    opacity: 0;
+  }
+
+  50% {
+    display: block;
+    opacity: 1;
+  }
 }

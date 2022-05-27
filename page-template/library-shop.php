@@ -1,3 +1,8 @@
+<?php /**
+ *
+ * Template Name: Библиотека
+ *
+ */;?>
 <!-- <div class="libery__menu">
 	<div class="libery__menu__bar">
 		<a href="">Библиотека</a>
@@ -12,12 +17,20 @@
 		<div class="g-title g-title--1 turquoise" data-aos="title-animation">
 			<h2><span><?php the_title();?> </span></h2>
 		</div>
+		<?php if ( get_field('zagolovok_spojlera') ) : ?>
+		<div class="library__spoiler">
+			<div class="library__spoiler__title">
+				<?php echo get_field('zagolovok_spojlera'); ?>
+			</div>
+			<?php if ( get_field('tekst_spojlera') ) : ?>
+			<div class="library__spoiler__body">
+				<?php echo get_field('tekst_spojlera'); ?>
+			</div>
+			<?php endif; ?>
+		</div>
+		<?php endif; ?>
 	</div>
 
-	<div class="library__spoiler">
-		<div class="library__spoiler__title"></div>
-		<div class="library__spoiler__body"></div>
-	</div>
 
 	<div class="library-type">
 		<div class="container">
