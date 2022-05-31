@@ -7243,14 +7243,17 @@ button.button {
     &__text {
       box-sizing: border-box;
       padding-left: 20px;
-      p{
+
+      p {
         padding-bottom: 5px;
-        span{
+
+        span {
           padding-left: 10px;
           display: inline-block;
         }
       }
-      b{
+
+      b {
         font-weight: bold;
       }
     }
@@ -7290,10 +7293,31 @@ button.button {
     grid-template-columns: repeat(3, 1fr);
     // grid-template-rows: ;
     grid-gap: 30px;
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: 500px) {
+      grid-template-columns: repeat(1, 1fr);
+
+    }
   }
 
   &__item {
     text-align: center;
+    border: 3px solid #FEB326;
+    border-radius: 30px;
+    padding: 10px;
+    height: 300px;
+
+    a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+    }
 
     h2 {
       font-weight: bold;
@@ -7303,14 +7327,10 @@ button.button {
   }
 
   &__img {
-    border: 3px solid #FEB326;
-    border-radius: 30px;
-    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 300px;
     box-sizing: border-box;
 
     img {
