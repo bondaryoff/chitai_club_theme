@@ -4129,7 +4129,7 @@ textarea:hover::-webkit-input-placeholder, textarea:focus::-webkit-input-placeho
 
 .books__filter {
   padding: 15px;
-  width: 200px;
+  width: 250px;
 }
 
 .books__filter__item {
@@ -6924,6 +6924,10 @@ button.button:hover {
   border-radius: 10px;
   font-weight: bold;
   margin-left: 15px;
+}
+
+.libery__btn.disable {
+  background: #D0CECE;
 }
 
 .library-type__wr {

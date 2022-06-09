@@ -12,6 +12,29 @@
 </div> -->
 
 <?php get_header();?>
+
+<div class="promo-block">
+	<div class="container">
+		<div class="promo-block__inn">
+			<?php if (have_rows('slajder')): ?>
+			<?php while (have_rows('slajder')): the_row();?>
+
+			<div class="promo-block__item" style="background-image: url(<?php the_sub_field('izobrazhenie');?>);">
+				<div class="promo-block__title">
+					<h1><?php the_sub_field('slogan');?></h1>
+				</div>
+			</div>
+
+			<?php endwhile;?>
+			<?php endif;?>
+
+		</div>
+
+		<div class="promo-block__dots"></div>
+
+	</div>
+	<div class="promo-block__bottom"> </div>
+</div>
 <section class="libery">
 	<div class="container">
 		<div class="g-title g-title--1 turquoise" data-aos="title-animation">

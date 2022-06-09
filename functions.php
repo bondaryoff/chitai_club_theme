@@ -432,24 +432,484 @@ form {
 	width: 100%;
 }
 
-#nav{
-    text-align: center;
+#nav {
+	text-align: center;
 }
 
-#backtoblog{
-    text-align: center;
+#backtoblog {
+	text-align: center;
 }
 
 .login form .forgetmenot {
 	display: block;
 	float: none;
 }
-#wp-auth-check-wrap #wp-auth-check{
-    background: #EDFDDE !important;
+
+#wp-auth-check-wrap #wp-auth-check {
+	background: #EDFDDE !important;
 }
 </style>
 <script>
-    // document.querySelector('#login h1 a').href="https://chitai.club/"; 
+// document.querySelector('#login h1 a').href="https://chitai.club/"; 
 </script>
 <?php }
+
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+
+
+
+
+
+// 
+// 
+// 
+// 
+// 
+
+/**
+* Post Type: Книги.
+*/
+function cptui_register_my_cpts_book() {
+
+	$labels = [
+		"name" => __( "Книги", "readclub" ),
+		"singular_name" => __( "Книга", "readclub" ),
+	];
+
+	$args = [
+		"label" => __( "Книги", "readclub" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => [ "slug" => "book", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "book", $args );
+}
+
+add_action( 'init', 'cptui_register_my_cpts_book' );
+
+
+/**
+* Post Type: Библиотека.
+*/
+function cptui_register_my_cpts_privetboock() {
+
+	$labels = [
+		"name" => __( "Библиотека", "readclub" ),
+		"singular_name" => __( "Книга", "readclub" ),
+	];
+
+	$args = [
+		"label" => __( "Библиотека", "readclub" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => [ "slug" => "privetboock", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "privetboock", $args );
+}
+
+add_action( 'init', 'cptui_register_my_cpts_privetboock' );
+
+
+/**
+* Taxonomy: Программы.
+*/
+function cptui_register_my_taxes_programm() {
+
+	$labels = [
+		"name" => __( "Программы", "readclub" ),
+		"singular_name" => __( "Программа", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Программы", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'programm', 'with_front' => true, ],
+		"show_admin_column" => true,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "programm",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "programm", [ "book" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_programm' );
+
+
+/**
+* Taxonomy: Возраст.
+*/
+function cptui_register_my_taxes_age() {
+
+	$labels = [
+		"name" => __( "Возраст", "readclub" ),
+		"singular_name" => __( "Возраст", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Возраст", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'age', 'with_front' => true, ],
+		"show_admin_column" => true,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "age",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "age", [ "book" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_age' );
+
+/**
+* Taxonomy: Цикл.
+*/
+function cptui_register_my_taxes_loop() {
+
+	$labels = [
+		"name" => __( "Цикл", "readclub" ),
+		"singular_name" => __( "Цикл", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Цикл", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'loop', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => false,
+		"rest_base" => "loop",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "loop", [ "product", "privetboock" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_loop' );
+
+
+/**
+* Taxonomy: Длительность.
+*/
+function cptui_register_my_taxes_dlitelnost() {
+
+	$labels = [
+		"name" => __( "Длительность", "readclub" ),
+		"singular_name" => __( "Длительность", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Длительность", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'dlitelnost', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "dlitelnost",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "dlitelnost", [ "product" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_dlitelnost' );
+
+/**
+* Taxonomy: Автор.
+*/
+function cptui_register_my_taxes_avtor() {
+
+	$labels = [
+		"name" => __( "Автор", "readclub" ),
+		"singular_name" => __( "Автор", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Автор", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'avtor', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "avtor",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "avtor", [ "product" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_avtor' );
+
+/**
+* Taxonomy: Автор.
+*/
+function cptui_register_my_taxes_autor() {
+
+	$labels = [
+		"name" => __( "Автор", "readclub" ),
+		"singular_name" => __( "Автор", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Автор", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'autor', 'with_front' => true, ],
+		"show_admin_column" => true,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "autor",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "autor", [ "book" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_autor' );
+
+/**
+* Taxonomy: Уровень.
+*/
+function cptui_register_my_taxes_level() {
+
+	$labels = [
+		"name" => __( "Уровень", "readclub" ),
+		"singular_name" => __( "Уровень", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Уровень", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'level', 'with_front' => true, ],
+		"show_admin_column" => true,
+		"show_in_rest" => true,
+		"show_tagcloud" => true,
+		"rest_base" => "level",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "level", [ "product" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_level' );
+
+
+/**
+* Taxonomy: Тип библиотеки.
+*/
+function cptui_register_my_taxes_library_type() {
+
+	$labels = [
+		"name" => __( "Тип библиотеки", "readclub" ),
+		"singular_name" => __( "Тип библиотеки", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Тип библиотеки", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'library_type', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => false,
+		"rest_base" => "library_type",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "library_type", [ "privetboock" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_library_type' );
+
+/**
+* Taxonomy: Сложность.
+*/
+function cptui_register_my_taxes_complexity() {
+
+	$labels = [
+		"name" => __( "Сложность", "readclub" ),
+		"singular_name" => __( "Complexity", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Сложность", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'complexity', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => false,
+		"rest_base" => "complexity",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "complexity", [ "privetboock" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_complexity' );
+
+/**
+* Taxonomy: Интересно детям.
+*/
+function cptui_register_my_taxes_interesting_for_children() {
+
+	$labels = [
+		"name" => __( "Интересно детям", "readclub" ),
+		"singular_name" => __( "Интересно детям", "readclub" ),
+	];
+
+	
+	$args = [
+		"label" => __( "Интересно детям", "readclub" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'interesting_for_children', 'with_front' => true, ],
+		"show_admin_column" => false,
+		"show_in_rest" => true,
+		"show_tagcloud" => false,
+		"rest_base" => "interesting_for_children",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "interesting_for_children", [ "privetboock" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_interesting_for_children' );
