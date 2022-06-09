@@ -432,24 +432,26 @@ form {
 	width: 100%;
 }
 
-#nav{
-    text-align: center;
+#nav {
+	text-align: center;
 }
 
-#backtoblog{
-    text-align: center;
+#backtoblog {
+	text-align: center;
 }
 
 .login form .forgetmenot {
 	display: block;
 	float: none;
 }
-#wp-auth-check-wrap #wp-auth-check{
-    background: #EDFDDE !important;
+
+#wp-auth-check-wrap #wp-auth-check {
+	background: #EDFDDE !important;
 }
 </style>
 <script>
-    // document.querySelector('#login h1 a').href="https://chitai.club/"; 
+// document.querySelector('#login h1 a').href="https://chitai.club/"; 
 </script>
 <?php }
+
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
