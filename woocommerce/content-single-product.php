@@ -213,14 +213,14 @@ do_action('woocommerce_before_single_product_summary');
 				</div>
 			</div>
 
-			<div class="buy-options__item">
+			<!-- <div class="buy-options__item">
 				<div class="buy-options__header">
 					<span>Библиотека</span>
 				</div>
 				<div class="buy-options__body">
 					Пока библиотеки нет, но скоро будет.
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 
@@ -291,9 +291,7 @@ do_action('woocommerce_before_single_product_summary');
 				<?php $i++;?>
 				<div class="content__item content__item-<?php echo $i; ?>">
 					<style>
-					.content__item-<?php echo $i;
-
-					?>strong {
+					.content__item-<?php echo $i;?>strong {
 						color: <?php echo $loop['czvet_bloka'];
 						?> !important;
 					}

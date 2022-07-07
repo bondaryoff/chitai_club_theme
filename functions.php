@@ -48,6 +48,8 @@ if (!function_exists('readclub_setup')):
   add_theme_support('post-thumbnails');
 
   add_image_size( 'anons__img', 335, 216, true);
+  add_image_size( '300x300', 300, 300, true);
+  add_image_size( 'thumbnail__custom', 200, 230, true);
 
 
 
@@ -108,20 +110,40 @@ add_action('after_setup_theme', 'readclub_setup');
 /**
  * Enqueue scripts and styles.
  */
+
+ /** * Completely Remove jQuery From WordPress */
+// function my_init() {
+//     if (!is_admin()) {
+//         wp_deregister_script('jquery');
+//         wp_register_script('jquery', false);
+//     }
+// }
+// add_action('init', 'my_init');
+
+
+
 function readclub_styles() {
- wp_enqueue_style('readclub-style', get_stylesheet_uri(), array(), _S_VERSION);
- wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION);
+
+	global $ver_num;
+  $ver_num = mt_rand();
+	// _S_VERSION
+
+ wp_enqueue_style('readclub-style', get_stylesheet_uri(), array(), $ver_num,'all');
+ wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css', array(), $ver_num,'all');
 }
 add_action('wp_head', 'readclub_styles');
+// add_action('wp_enqueue_scripts', 'readclub_styles');
 
 function readclub_scripts() {
+//  wp_enqueue_script('jQuery', get_template_directory_uri() . '/js/jquery.min.js', array(), _S_VERSION, true);
  wp_enqueue_script('aos', get_template_directory_uri() . '/js/aos.js', array(), _S_VERSION, true);
  wp_enqueue_script('magnific-popup', get_template_directory_uri() . '/js/magnific-popup.js', array(), _S_VERSION, true);
  wp_enqueue_script('slick', get_template_directory_uri() . '/js/slick.min.js', array(), _S_VERSION, true);
  wp_enqueue_script('main', get_template_directory_uri() . '/js/main.min.js', array(), _S_VERSION, true);
 
 }
-add_action('wp_footer', 'readclub_scripts');
+// add_action('wp_footer', 'readclub_scripts');
+add_action('wp_enqueue_scripts', 'readclub_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -455,3 +477,225 @@ form {
 <?php }
 
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+
+function the_custom_excerpt( $length ) {
+    return 20;
+}
+add_filter( 'excerpt_length', 'the_custom_excerpt', 999 );
+
+
+
+
+
+
+
+
+
+
+
+add_action('wp_ajax_myfilter', 'misha_filter_function'); // wp_ajax_{ACTION HERE} 
+add_action('wp_ajax_nopriv_myfilter', 'misha_filter_function');
+
+function misha_filter_function(){
+	$args = array(
+    'post_type' => 'privetboock', 
+    'posts_per_page' => 2,
+		'orderby' => 'name', // we will sort posts by date
+		'order'	=> $_POST['name'], // ASC or DESC
+    'paged' => (get_query_var('paged') ? get_query_var('paged') : 1)
+	);
+ 
+	// for taxonomies / categories
+
+	if( isset( $_POST['complexity']) && isset($_POST['interesting_for_children']) && isset( $_POST['loop'] )){
+		$args['tax_query'] = array(
+      'relation' => 'AND',
+			array(
+				'taxonomy' => 'complexity',
+				'field' => 'id',
+				'terms' => $_POST['complexity'],
+      ),
+			array(
+				'taxonomy' => 'interesting_for_children',
+				'field' => 'id',
+				'terms' => $_POST['interesting_for_children'],
+      ),
+			array(
+				'taxonomy' => 'loop',
+				'field' => 'id',
+				'terms' => $_POST['loop'],
+      )
+		);
+  } else if( isset( $_POST['complexity']) && isset($_POST['interesting_for_children'])){
+    $args['tax_query'] = array(
+      'relation' => 'AND',
+			array(
+				'taxonomy' => 'complexity',
+				'field' => 'id',
+				'terms' => $_POST['complexity'],
+      ),
+			array(
+				'taxonomy' => 'interesting_for_children',
+				'field' => 'id',
+				'terms' => $_POST['interesting_for_children'],
+      )
+		);
+  } else if( isset( $_POST['complexity']) && isset( $_POST['loop'] )){
+    $args['tax_query'] = array(
+      'relation' => 'AND',
+			array(
+				'taxonomy' => 'complexity',
+				'field' => 'id',
+				'terms' => $_POST['complexity'],
+      ),
+			array(
+				'taxonomy' => 'loop',
+				'field' => 'id',
+				'terms' => $_POST['loop'],
+      )
+		);
+  } else if( isset($_POST['interesting_for_children']) && isset( $_POST['loop'] )){
+    $args['tax_query'] = array(
+      'relation' => 'AND',
+			array(
+				'taxonomy' => 'interesting_for_children',
+				'field' => 'id',
+				'terms' => $_POST['interesting_for_children'],
+      ),
+			array(
+				'taxonomy' => 'loop',
+				'field' => 'id',
+				'terms' => $_POST['loop'],
+      )
+		);
+  } else if( isset( $_POST['complexity'])) {
+    $args['tax_query'] = array(
+			array(
+				'taxonomy' => 'complexity',
+				'field' => 'id',
+				'terms' => $_POST['complexity'],
+      ),
+		);
+  } else if( isset( $_POST['interesting_for_children'])) {
+    $args['tax_query'] = array(
+			array(
+				'taxonomy' => 'interesting_for_children',
+				'field' => 'id',
+				'terms' => $_POST['interesting_for_children'],
+      )
+		);
+  } else if( isset( $_POST['loop'])) {
+    $args['tax_query'] = array(
+			array(
+				'taxonomy' => 'loop',
+				'field' => 'id',
+				'terms' => $_POST['loop'],
+      )
+		);
+  }
+
+ 
+	$query = new WP_Query( $args ); ?>
+<div class="libery__row">
+	<?php if( $query->have_posts() ) {  ?>
+	<?php $i = 0; ?>
+	<?php while( $query->have_posts() ): $query->the_post(); ?>
+	<?php $i++;?>
+	<?php $complexity               = get_the_terms($post->ID, 'complexity');?>
+	<?php $loop                     = get_the_terms($post->ID, 'loop');?>
+	<?php $interesting_for_children = get_the_terms($post->ID, 'interesting_for_children');?>
+
+	<section
+		class="lib-box <?php foreach ($complexity as $term) {echo $term->slug . ' ';}?><?php foreach ($loop as $term) {echo $term->slug . ' ';}?><?php foreach ($interesting_for_children as $term) {echo $term->slug . ' ';}?>"
+		data-aos="books-amin" data-aos-offset="-500" data-aos-delay="<?php echo $i . '00'; ?>">
+		<div class="lib-box__img">
+			<?php the_post_thumbnail(['200', '999', true]);?>
+		</div>
+		<div class="lib-box__info">
+
+			<?php $chitaem = get_field('chitaem_v_chitaj_klube');?>
+			<div class="lib-box__text <?php if ($chitaem) {echo 'has-read-label';}?>">
+				<?php if ($chitaem) {?>
+				<div class="read-in-club">
+					<img src="<?php bloginfo('template_url');?>/img/read-in-club.png" alt="">
+				</div>
+				<?php }?>
+
+				<h2><?php the_title();?></h2>
+				<p><b>Автор:</b>
+					<?php $avtor = get_the_terms($post->ID, 'avtor');?>
+					<?php foreach ($avtor as $term): ?>
+					<span><?php echo $term->name; ?></span>
+					<?php endforeach;?>
+				</p>
+				<p><b>Сложность чтения:</b>
+					<?php foreach ($complexity as $term): ?>
+					<span><?php echo $term->name; ?></span>
+					<?php endforeach;?>
+				</p>
+				<p>
+					<b>Цикл:</b>
+					<?php foreach ($loop as $term): ?>
+					<span><?php echo $term->name; ?></span>
+					<?php endforeach;?>
+				</p>
+				<p>
+					<b>Интересно детям:</b>
+					<?php foreach ($interesting_for_children as $term): ?>
+					<span><?php echo $term->name; ?></span>
+					<?php endforeach;?>
+				</p>
+				<div class="lib-excerpt">
+					<div class="short">
+						<?php $the_excerpt = get_the_excerpt();?>
+						<?php echo mb_substr($the_excerpt, 0, 250); ?>
+						<span>... ⋙</span>
+					</div>
+					<div class="long"><?php the_excerpt();?>
+						<span> ⋘</span>
+					</div>
+
+
+				</div>
+				<div class="lib-box__tags">
+					<?php $tags = get_the_terms($post->ID, 'tags');?>
+					<?php foreach ($tags as $term): ?>
+					<a href="<?php echo get_bloginfo('url') . '/tags/' . $term->slug; ?>"><?php echo $term->name; ?></a>
+					<?php endforeach;?>
+				</div>
+			</div>
+			<div class="lib-box__btns">
+				<?php if (get_field('audio_kniga')): ?>
+				<a href="#<?php echo $post->ID; ?>" class="lib-box__btn audio_kniga modal-open">Аудио книга</a>
+
+				<div style="display:none">
+					<div class="lib-box-popup" id="<?php echo $post->ID; ?>">
+						<audio controls>
+							<source src="<?php the_field('audio_kniga');?>" type="audio/mpeg">
+							Your browser does not support the audio element.
+						</audio>
+
+					</div>
+				</div>
+
+				<?php else: ?>
+				<div class="lib-box__btn disable">Аудио книга</div>
+				<?php endif;?>
+				<!--  -->
+				<?php if (get_field('videoobzor')): ?>
+				<a href="<?php the_field('videoobzor');?>" class="lib-box__btn videoobzor">Видеообзор</a>
+				<?php else: ?>
+				<div class="lib-box__btn disable">Видеообзор</div>
+				<?php endif;?>
+				<a href="<?php the_permalink();?>" class="lib-box__btn more">Читать книгу</a>
+			</div>
+		</div>
+	</section>
+
+	<?php endwhile;?>
+	<?php the_posts_pagination();?>
+	<?php wp_reset_query();?>
+	<?php } else {	echo 'No posts found';} die();?>
+</div>
+<?php } ?>
